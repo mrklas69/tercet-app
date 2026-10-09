@@ -9,7 +9,7 @@
     <Property Id="REBOOT" Value="ReallySuppress" />
     <Property Id="MSIRESTARTMANAGERCONTROL" Value="Disable" />
     <Property Id="ARPNOMODIFY" Value="1" />
-    <Property Id="ARPCOMMENTS" Value="Private preview. Close Tercet before updating. Your queue is kept when uninstalling." />
+    <Property Id="ARPCOMMENTS" Value="Preview release. Close Tercet before updating. Your queue is kept when uninstalling." />
     <StandardDirectory Id="LocalAppDataFolder">
       <Directory Id="UserProgramsFolder" Name="Programs"><Directory Id="INSTALLFOLDER" Name="Tercet" /></Directory>
     </StandardDirectory>

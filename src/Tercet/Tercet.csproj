@@ -11,7 +11,7 @@
     <ApplicationIcon>Assets/Tercet.ico</ApplicationIcon>
     <!-- Verze aplikace = verze MSI balíčku (installer/README.md). Zvedá se
          při vydání upgradu; Windows Installer chce vyšší trojčíslí. -->
-    <Version>2.0.3</Version>
+    <Version>2.0.4</Version>
   </PropertyGroup>
 
   <!-- WinForms používáme jen pro systray; jeho globální using by kolidoval s WPF. -->

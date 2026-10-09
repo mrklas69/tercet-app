@@ -9,6 +9,29 @@ colored light. Your queue is stored locally; no account is required for local us
 *The built-in example queue on the Windows desktop, using the system accent color.
 Some lights blink in the app.*
 
+## Download and install
+
+**[Download Tercet Preview 2.0.4 for Windows](https://github.com/mrklas69/tercet-app/releases/download/v2.0.4/Tercet-2.0.4-win-x64.msi)**
+
+For **Windows 11 on Intel/AMD x64**. The installer includes the .NET Desktop
+Runtime; you do not need Git, PowerShell, an SDK or an account.
+
+1. Download and open the MSI. If Tercet is already running, choose **Exit**
+   in its system tray menu before installing the update.
+2. Open **Tercet Preview** from the Windows Start menu.
+3. Press **Ctrl+Alt+T** to edit the example tasks, then choose **Save**.
+
+Tercet starts automatically when you next sign in. Updates keep your saved
+tasks; uninstalling the MSI also leaves your data folder in place.
+[Release notes and checksums](https://github.com/mrklas69/tercet-app/releases/tag/v2.0.4)
+and [full installation instructions](installer/README.txt) are available.
+
+This preview is unsigned. Windows Smart App Control or SmartScreen may block it;
+disabling Windows protection is not part of setup. A Microsoft Store version is
+planned but is not available yet.
+
+## Using Tercet
+
 The note stays on the desktop beneath application windows. Open its editor with
 **Ctrl+Alt+T** or **Edit** in the system tray menu. Right-click an item for actions,
 then choose **Save** or **Cancel**. Completed tasks can be moved to the archive

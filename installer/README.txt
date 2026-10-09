@@ -1,4 +1,4 @@
-TERCET — preview for Windows 11 (Intel/AMD x64)
+TERCET PREVIEW 2.0.4 — Windows 11 (Intel/AMD x64)
 
 Tercet is a small desktop note for the tasks you want to keep in view.
 It stays on the desktop beneath your application windows. Colored lights
@@ -36,6 +36,12 @@ Synchronization settings, if configured: settings.json
 Updates preserve your saved queue, backup and settings. If the queue is
 missing or damaged and a valid backup exists, Tercet offers to restore it.
 The local backup is not a substitute for a separate backup of your data.
+
+Choose Back Up Queue in the tray menu to save your tasks and archive to a
+JSON file outside the data folder. Restore Queue opens that file in the
+editor: choose Save to accept it or Cancel to keep the current queue.
+Exported backups do not contain synchronization settings; keep your optional
+queue link separately. Synchronization is not a backup.
 
 To update: choose Exit, back up the data folder, run an MSI with a higher
 version number, then launch Tercet Preview from Start.
