@@ -4,6 +4,10 @@ Tercet is a small Windows desktop note for keeping your current tasks in view.
 You edit a tree with up to three levels and mark each task's situation with a
 colored light. Your queue is stored locally; no account is required for local use.
 
+![Tercet desktop note showing the built-in example queue](resources/demo-note.png)
+
+*The built-in example queue in the light theme. Some lights blink in the app.*
+
 The note stays on the desktop beneath application windows. Open its editor with
 **Ctrl+Alt+T** or **Edit** in the system tray menu. Right-click an item for actions,
 then choose **Save** or **Cancel**. Completed tasks can be moved to the archive
