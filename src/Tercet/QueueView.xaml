@@ -1,0 +1,30 @@
+<UserControl x:Class="Tercet.QueueView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Tercet"
+        mc:Ignorable="d"
+        Focusable="False"
+        Background="{DynamicResource ApplicationBackgroundBrush}"
+        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+        FontFamily="Segoe UI" FontSize="14" UseLayoutRounding="False">
+    <!-- Jedna společná mřížka drží perspektivy ve stejném sloupci.
+         Pasivní režim přidá texty, editor vstupy a strukturální menu.
+         Rozměry jsou WPF jednotky (1/96 palce), nikoli fyzické pixely. -->
+    <!-- Pojmenovaný Border dostane v editačním režimu menu pro volnou plochu
+         těla (přidání na konec kořene); řádky mají vlastní menu na názvu. -->
+    <Border x:Name="Body" BorderBrush="{DynamicResource ControlStrokeColorSecondaryBrush}" BorderThickness="1" Padding="4,2"
+            Background="{DynamicResource ApplicationBackgroundBrush}">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                      Focusable="False">
+            <Grid x:Name="QueueGrid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" MaxWidth="210" />
+                    <ColumnDefinition Width="4" />
+                    <ColumnDefinition Width="42" />
+                </Grid.ColumnDefinitions>
+            </Grid>
+        </ScrollViewer>
+    </Border>
+</UserControl>

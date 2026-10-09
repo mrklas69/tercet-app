@@ -1,0 +1,3 @@
+# Všechny textové soubory držet s LF i na Windows (core.autocrlf by je při
+# checkoutu přepsal na CRLF).
+* text=auto eol=lf

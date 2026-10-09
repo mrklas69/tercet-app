@@ -1,0 +1,7 @@
+Your data and uninstalling Tercet
+
+Tercet keeps your queue and archive on this computer. Uninstalling the Store version deletes its local queue, archive and settings.
+
+Before uninstalling, choose Back Up Queue… from Tercet's system tray menu. Save the backup outside the app's data folder, for example in Documents or on another drive. After reinstalling, choose Restore Queue… to review the backup, then Save to use it.
+
+Backups include the queue and archive, but not your server connection settings. If you use synchronization, keep your queue link separately. Saving a restored queue is followed by normal synchronization when connected. Synchronization is not a backup.

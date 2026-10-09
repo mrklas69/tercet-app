@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets/Tercet.ico</ApplicationIcon>
+    <!-- Verze aplikace = verze MSI balíčku (installer/README.md). Zvedá se
+         při vydání upgradu; Windows Installer chce vyšší trojčíslí. -->
+    <Version>2.0.3</Version>
+  </PropertyGroup>
+
+  <!-- WinForms používáme jen pro systray; jeho globální using by kolidoval s WPF. -->
+  <ItemGroup>
+    <Using Remove="System.Windows.Forms" />
+    <Using Remove="System.Drawing" />
+  </ItemGroup>
+
+  <!-- Anglická ukázková fronta pro první spuštění bez fronty i zálohy; build
+       ji přibalí jako resource, takže funguje z libovolného cwd a nesahá na
+       provozní data uživatele. Testy mají vlastní data v tests/queue-fixture.json,
+       aby úprava ukázky neměnila jejich indexy a počty. -->
+  <ItemGroup>
+    <EmbeddedResource Include="Assets/first-run-queue.json" LogicalName="Tercet.FirstRunQueue" />
+    <!-- Stejné ICO je nativní ikonou exe i resource pro WPF okna a systray. -->
+    <Resource Include="Assets/Tercet.ico" />
+  </ItemGroup>
+
+  <!-- Fluent jinak přidává Mica přes DWM. Neprůhledné child okno hostované
+       uvnitř Exploreru potřebuje svůj ověřený způsob skládání. -->
+  <ItemGroup>
+    <RuntimeHostConfigurationOption Include="Switch.System.Windows.Appearance.DisableFluentThemeWindowBackdrop" Value="true" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Sonda DPI: vlastní EXE se stejným manifestem jako aplikace (DPI režim
+       PerMonitor), protože PowerShell jako hostitel testů dědí jiný režim.
+       Spouští ji tests/Check-DesktopProcess.ps1 po buildu aplikace. -->
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
+    <ApplicationManifest>../../src/Tercet/app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Reference na hotovou DLL místo ProjectReference záměrně: sonda má měřit
+         přesně tu sestavenou a ověřenou DLL dané konfigurace a nesmí spouštět
+         další build Tercetu (běžící instance drží exe své konfigurace).
+         Ze stejného důvodu projekt není v Tercet.slnx; build řešení ho nestaví. -->
+    <Reference Include="Tercet">
+      <HintPath>../../src/Tercet/bin/$(Configuration)/net10.0-windows/Tercet.dll</HintPath>
+    </Reference>
+    <!-- Sdílená testovací podtřída App s potlačeným OnStartup; tatáž, kterou
+         kompilují PowerShell testy přes Add-Type. -->
+    <Compile Include="../TestApplication.cs" />
+    <!-- Stejný přepínač jako v Tercet.csproj: bez Mica přes DWM. -->
+    <RuntimeHostConfigurationOption Include="Switch.System.Windows.Appearance.DisableFluentThemeWindowBackdrop" Value="true" />
+  </ItemGroup>
+</Project>

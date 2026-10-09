@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Šablona manifestu MSIX pro prototyp cesty Store. Build-Msix.ps1
+  nahradí __PUBLISHER__ subjektem podpisového certifikátu a __VERSION__
+  čtyřsložkovou verzí odvozenou z metadat Tercet.dll v payloadu.
+
+  Záměrně bez omezené capability `unvirtualizedResources`: Store ji podle
+  dokumentace určuje hrám Microsoftu a partnerů, takže prototyp měří chování
+  datové složky za podmínek, které Store skutečně dovolí.
+-->
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap10="http://schemas.microsoft.com/appx/manifest/uap/windows10/10"
+  xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap uap10 desktop rescap">
+
+  <!-- Name je identita balíčku na stroji (Package Family Name = Name + hash
+       vydavatele). Store při zveřejnění přidělí vlastní identitu i Publisher. -->
+  <Identity Name="Tercet.Prototype" Publisher="__PUBLISHER__" Version="__VERSION__" ProcessorArchitecture="x64" />
+
+  <Properties>
+    <DisplayName>Tercet Prototype</DisplayName>
+    <PublisherDisplayName>Tercet</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <!-- Windows 11 (22000) kvůli chování virtualizace AppData měřenému prototypem. -->
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.22000.0" MaxVersionTested="10.0.26100.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="en-us" />
+  </Resources>
+
+  <Applications>
+    <!-- mediumIL + packagedClassicApp = plná důvěra bez AppContaineru; proces
+         běží jako uživatel, SetParent pod Progman a RegisterHotKey jsou tedy
+         principiálně dostupné. Zda fungují, měří Check-Msix.ps1. -->
+    <Application Id="Tercet" Executable="Tercet.exe" uap10:TrustLevel="mediumIL" uap10:RuntimeBehavior="packagedClassicApp">
+      <uap:VisualElements DisplayName="Tercet Prototype" Description="A small desktop note for the tasks you want to keep in view."
+                          BackgroundColor="transparent"
+                          Square150x150Logo="Assets\Square150x150Logo.png"
+                          Square44x44Logo="Assets\Square44x44Logo.png" />
+      <Extensions>
+        <!-- Náhrada zástupce ve Startup (MSI): úlohu vidí Správce úloh a uživatel
+             ji může vypnout. Aktivuje se až po prvním ručním spuštění aplikace. -->
+        <desktop:Extension Category="windows.startupTask" Executable="Tercet.exe" EntryPoint="Windows.FullTrustApplication">
+          <desktop:StartupTask TaskId="TercetStartup" Enabled="true" DisplayName="Tercet Prototype" />
+        </desktop:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <rescap:Capability Name="runFullTrust" />
+  </Capabilities>
+</Package>

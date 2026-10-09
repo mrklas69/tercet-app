@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "queue": [
+    {
+      "id": "7e2c5e70-1d0a-4c3b-9a1e-000000000001",
+      "kind": "group",
+      "title": "Getting started",
+      "children": [
+        {
+          "id": "7e2c5e70-1d0a-4c3b-9a1e-000000000002",
+          "kind": "task",
+          "title": "Ctrl+Alt+T opens the editor",
+          "situation": "needsAttention",
+          "priority": "normal",
+          "perspective": "minutes",
+          "assignee": null
+        },
+        {
+          "id": "7e2c5e70-1d0a-4c3b-9a1e-000000000003",
+          "kind": "task",
+          "title": "Right-click a name for more",
+          "situation": "inactive",
+          "priority": "normal",
+          "perspective": "minutes",
+          "assignee": null
+        },
+        {
+          "id": "7e2c5e70-1d0a-4c3b-9a1e-000000000004",
+          "kind": "task",
+          "title": "Save keeps your changes",
+          "situation": "inactive",
+          "priority": "normal",
+          "perspective": "minutes",
+          "assignee": null
+        }
+      ]
+    },
+    {
+      "id": "7e2c5e70-1d0a-4c3b-9a1e-000000000005",
+      "kind": "group",
+      "title": "Work",
+      "children": [
+        {
+          "id": "7e2c5e70-1d0a-4c3b-9a1e-000000000006",
+          "kind": "group",
+          "title": "Client portal",
+          "children": [
+            {
+              "id": "7e2c5e70-1d0a-4c3b-9a1e-000000000007",
+              "kind": "task",
+              "title": "Fix login timeout",
+              "situation": "inProgress",
+              "priority": "high",
+              "perspective": "hours",
+              "assignee": "Me"
+            },
+            {
+              "id": "7e2c5e70-1d0a-4c3b-9a1e-000000000008",
+              "kind": "task",
+              "title": "Review pull request",
+              "situation": "underReview",
+              "priority": "normal",
+              "perspective": "hours",
+              "assignee": "Sam"
+            }
+          ]
+        },
+        {
+          "id": "7e2c5e70-1d0a-4c3b-9a1e-000000000009",
+          "kind": "task",
+          "title": "Send meeting notes",
+          "situation": "done",
+          "priority": "normal",
+          "perspective": "minutes",
+          "assignee": "Me"
+        }
+      ]
+    },
+    {
+      "id": "7e2c5e70-1d0a-4c3b-9a1e-000000000010",
+      "kind": "group",
+      "title": "Home",
+      "children": [
+        {
+          "id": "7e2c5e70-1d0a-4c3b-9a1e-000000000011",
+          "kind": "compositeTask",
+          "title": "Repair the fence",
+          "situation": "inProgress",
+          "priority": "normal",
+          "perspective": "days",
+          "assignee": "Me",
+          "children": [
+            {
+              "id": "7e2c5e70-1d0a-4c3b-9a1e-000000000012",
+              "kind": "task",
+              "title": "Replace posts",
+              "situation": "done",
+              "priority": "normal",
+              "perspective": "hours",
+              "assignee": "Me"
+            },
+            {
+              "id": "7e2c5e70-1d0a-4c3b-9a1e-000000000013",
+              "kind": "task",
+              "title": "Paint the fence",
+              "situation": "inactive",
+              "priority": "normal",
+              "perspective": "hours",
+              "assignee": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "7e2c5e70-1d0a-4c3b-9a1e-000000000014",
+      "kind": "task",
+      "title": "Book a dentist appointment",
+      "situation": "inactive",
+      "priority": "normal",
+      "perspective": "minutes",
+      "assignee": null
+    }
+  ],
+  "archive": [
+    {
+      "originalParentId": "7e2c5e70-1d0a-4c3b-9a1e-000000000010",
+      "originalIndex": 1,
+      "item": {
+        "id": "7e2c5e70-1d0a-4c3b-9a1e-000000000015",
+        "kind": "compositeTask",
+        "title": "Fix the gate",
+        "situation": "done",
+        "priority": "normal",
+        "perspective": "days",
+        "assignee": "Me",
+        "children": [
+          {
+            "id": "7e2c5e70-1d0a-4c3b-9a1e-000000000016",
+            "kind": "task",
+            "title": "Replace hinges",
+            "situation": "done",
+            "priority": "normal",
+            "perspective": "hours",
+            "assignee": "Me"
+          },
+          {
+            "id": "7e2c5e70-1d0a-4c3b-9a1e-000000000017",
+            "kind": "task",
+            "title": "Adjust the latch",
+            "situation": "done",
+            "priority": "normal",
+            "perspective": "minutes",
+            "assignee": "Me"
+          }
+        ]
+      }
+    }
+  ]
+}

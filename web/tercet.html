@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en" data-app-id="tercet">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light dark">
+<title>Tercet</title>
+<!-- Volitelný skript hostitele počítá otevření stránky, nikoli refresh fronty.
+     Mimo hostitele nemusí existovat; jeho absence nebrání čtení fronty. -->
+<script src="/js/app-usage.js" data-app-id="tercet" defer></script>
+<style>
+/* Pevná paleta lístečku; web nemá systémový
+   motiv Windows, tmavou variantu volí prefers-color-scheme. Podklady skupin
+   značí hloubku (jako v desktopu), nikoli situaci. Pruh první úrovně nemá
+   na webu akcent Windows, proto pevný neutrální odstín. */
+:root {
+  color-scheme: light;
+  --paper: #f6f5f2; --ink: #292a28; --muted: #686b65; --border: #bdbfb8;
+  --band0: #dcddd5; --band1: #e7e8e1; --band2: #f0f0eb;
+  --page: #deded9;
+}
+/* Tmavá varianta: guard :not([data-theme="light"]) dovolí testu vynutit
+   světlou i na stroji s tmavou předvolbou (headless Edge ji přebírá z OS). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: #232421; --ink: #e6e5e0; --muted: #a3a69f; --border: #4a4c47;
+    --band0: #3b3d38; --band1: #33352f; --band2: #2b2d29;
+    --page: #161715;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #232421; --ink: #e6e5e0; --muted: #a3a69f; --border: #4a4c47;
+  --band0: #3b3d38; --band1: #33352f; --band2: #2b2d29;
+  --page: #161715;
+}
+* { box-sizing: border-box; }
+body { margin: 0; padding: 16px; background: var(--page); color: var(--ink); font: 15px/1.25 "Segoe UI", system-ui, sans-serif; }
+main { max-width: 480px; margin: 0 auto; }
+[hidden] { display: none !important; }
+.muted { color: var(--muted); }
+p { margin: .5em 0; }
+button { font: inherit; padding: .5em 1em; border: 1px solid var(--ink); border-radius: 4px; background: var(--ink); color: var(--paper); cursor: pointer; }
+button:disabled { opacity: .5; cursor: default; }
+a { color: inherit; }
+.result { margin-top: 1em; padding: .75em; border: 1px solid var(--border); border-radius: 4px; background: var(--paper); word-break: break-all; }
+
+/* Lísteček: hlavička, strom a patička jako v maketě, ale na plnou šířku
+   telefonu; rozměry sloupce perspektivy a odsazení úrovní zůstávají. */
+.note { background: var(--paper); border: 1px solid var(--border); border-radius: 3px; }
+.note header, .note footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 3px 6px; }
+.note header { border-bottom: 1px solid var(--border); }
+.note footer { border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; }
+h1 { margin: 0; font: inherit; font-weight: 600; }
+.tree { padding: 2px 6px; }
+.row { display: flex; align-items: center; min-height: 1.25em; }
+/* Odsazení podle hloubky: 10 px na úroveň jako v desktopu (QueueView). */
+.name { display: flex; align-items: center; flex: 1 1 auto; min-width: 0; padding-left: calc(var(--depth, 0) * 10px); gap: 3px; }
+.label { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.group .label, .compositeTask .label { font-weight: 600; }
+.group { margin: 0 -6px; padding: 0 6px; background: var(--band0); }
+.group[data-depth="1"] { background: var(--band1); }
+.group[data-depth="2"] { background: var(--band2); }
+.unit { flex: 0 0 42px; text-align: right; color: var(--muted); font-size: 12px; }
+.empty { color: var(--muted); padding: 4px 0; }
+.status { padding: 4px 6px; font-size: 13px; }
+.status.error { color: #b64740; }
+
+/* LED dioda: radiální přechod s odleskem mimo střed a tmavším okrajem;
+   barvy dodává JS z jediné palety (proměnné --hi, --body, --edge).
+   CSS neumí oddělit ohnisko od středu jako WPF GradientOrigin, střed
+   přechodu v 35 %/30 % je nejbližší náhrada. */
+.dot { position: relative; flex: 0 0 10px; width: 10px; height: 10px; border-radius: 50%;
+       background: radial-gradient(circle at 35% 30%, var(--hi) 0, var(--body) 55%, var(--edge) 100%); }
+/* Blikající dioda má tři vrstvy v rámečku 14 × 14 se záporným levým okrajem,
+   aby název zůstal na stejném místě jako u statického kolečka:
+   zhaslá dioda (tmavší tón, nikdy šedá), svatozář a svítící dioda. */
+.dot.blink { flex-basis: 14px; width: 14px; height: 14px; margin: 0 1px 0 -2px; background: none; }
+.dot.blink i { position: absolute; left: 2px; top: 2px; width: 10px; height: 10px; border-radius: 50%; }
+.dot.blink .dim { background: var(--dim); }
+.dot.blink .halo { left: 0; top: 0; width: 14px; height: 14px;
+                   background: radial-gradient(circle, var(--halo) 70%, transparent 100%); }
+.dot.blink .lit { background: radial-gradient(circle at 35% 30%, var(--hi) 0, var(--body) 55%, var(--edge) 100%); }
+/* Opacity 1 → 0 za půl periody a zpět (alternate) = celá perioda;
+   ease-in-out se u obou krajů zdrží podobně jako SineEase v WPF. */
+.dot.blink .lit, .dot.blink .halo { animation: blink var(--half) ease-in-out infinite alternate; }
+@keyframes blink { from { opacity: 1; } to { opacity: 0; } }
+/* Uživatel s omezeným pohybem vidí diody svítit stále, bez svatozáře. */
+@media (prefers-reduced-motion: reduce) {
+  .dot.blink .lit, .dot.blink .halo { animation: none; }
+  .dot.blink .halo { opacity: 0; }
+}
+</style>
+</head>
+<body>
+<main>
+  <section id="create" hidden>
+    <h1>Tercet – shared queue</h1>
+    <p class="muted">The server keeps the task queue from the Tercet desktop app so it is at hand
+      on a phone and shared between computers. Anyone with the link can read and overwrite
+      the queue: do not share it, bookmark it.</p>
+    <p>Create a new, empty queue. The server generates a secret link.</p>
+    <button id="create-button" type="button">Create queue</button>
+    <div id="create-result" class="result" hidden></div>
+  </section>
+
+  <section id="note" class="note" aria-label="Tercet queue" hidden>
+    <header><h1>Tercet</h1><span id="modified" class="muted"></span></header>
+    <div id="tree" class="tree" role="list" aria-label="Tasks by group"></div>
+    <div id="status" class="status" hidden></div>
+    <footer><span id="count"></span><span id="version" class="muted"></span></footer>
+  </section>
+</main>
+<script>
+// Existující frontu stránka jen čte: GET s tokenem v hlavičce, žádné PUT.
+// Token je ve fragmentu URL (#token): fragment nikdy neopouští prohlížeč,
+// takže neskončí v access logu serveru.
+(() => {
+  "use strict";
+  const api = "/api/tercet";
+  const tokenHeader = "X-Tercet-Token";
+  const pageVersion = "0.2.0";
+
+  // Paleta a tempo blikání: jediný zdroj je QueueAttention.cs v desktopu,
+  // paritu hlídá tests/Check-Web.ps1 (barva, popisek, perioda v sekundách).
+  const situations = {
+    inactive: ["#9A9D96", "Inactive", 0],
+    inProgress: ["#628448", "In progress", 4],
+    underReview: ["#BD812B", "Under review", 2],
+    needsAttention: ["#B64740", "Needs attention", 1],
+    done: ["#527CBA", "Done", 0]
+  };
+  // Popisky perspektiv shodné s QueueView.PerspectiveLabel v desktopu.
+  const perspectives = { minutes: "min", hours: "hr", days: "day" };
+
+  // Míchání barev po složkách jako QueueView.Mix: amount 0 vrátí color,
+  // 1 vrátí toward; C# přetypování na byte ořezává, proto Math.trunc.
+  const rgb = hex => [1, 3, 5].map(i => parseInt(hex.substr(i, 2), 16));
+  const mix = (color, toward, amount) =>
+    "rgb(" + rgb(color).map((c, i) => Math.trunc(c + (toward[i] - c) * amount)).join(" ") + ")";
+  const white = [255, 255, 255], black = [0, 0, 0];
+  const alpha = (color, a) => "rgb(" + rgb(color).join(" ") + " / " + a + ")";
+
+  // Textový obsah vždy přes textContent, nikdy innerHTML: dokument na
+  // serveru může napsat kdokoli s odkazem, HTML z něj se nesmí spustit.
+  const el = (tag, className, text) => {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text !== undefined) node.textContent = text;
+    return node;
+  };
+  const byId = id => document.getElementById(id);
+
+  // Dioda: statická = jedna vrstva s LED přechodem; blikající = tři vrstvy.
+  // Svítící vrstva blikající diody je světlejší než základ (35 % k bílé),
+  // zhaslá je 50 % k černé, svatozář má základní barvu s alfa 180/255.
+  function ledStyle(node, color) {
+    node.style.setProperty("--hi", mix(color, white, 0.45));
+    node.style.setProperty("--body", mix(color, black, 0));
+    node.style.setProperty("--edge", mix(color, black, 0.3));
+  }
+  function dot(situation) {
+    const known = Object.prototype.hasOwnProperty.call(situations, situation);
+    const [color, description, seconds] = known ? situations[situation] : [situations.inactive[0], "Unknown situation", 0];
+    const node = el("span", "dot");
+    node.setAttribute("role", "img");
+    node.setAttribute("aria-label", description);
+    node.title = description;
+    if (seconds === 0) { ledStyle(node, color); return node; }
+    node.classList.add("blink");
+    node.style.setProperty("--half", (seconds / 2) + "s");
+    node.style.setProperty("--dim", mix(color, black, 0.5));
+    const bright = toHex(mix(color, white, 0.35));
+    node.style.setProperty("--halo", alpha(bright, (180 / 255).toFixed(3)));
+    node.append(el("i", "dim"), el("i", "halo"));
+    const lit = el("i", "lit");
+    ledStyle(lit, bright);
+    node.append(lit);
+    return node;
+  }
+  // Převod "rgb(r g b)" zpět na #rrggbb, aby světlejší odstín prošel stejnou
+  // cestou (ledStyle, alpha) jako základní barva.
+  function toHex(rgbText) {
+    return "#" + rgbText.slice(4, -1).split(" ").map(n => Number(n).toString(16).padStart(2, "0")).join("");
+  }
+
+  // Průchod stromu rodič před potomky, hloubka od nuly, stejně jako
+  // QueueDocument.Rows() v desktopu. Archiv se nezobrazuje.
+  function render(document_) {
+    const tree = byId("tree");
+    tree.replaceChildren();
+    let tasks = 0;
+    const walk = (items, depth) => {
+      for (const item of items) {
+        if (!item || typeof item !== "object") continue;
+        const kind = typeof item.kind === "string" ? item.kind : "task";
+        const title = typeof item.title === "string" ? item.title : "";
+        const row = el("div", "row " + kind);
+        row.setAttribute("role", "listitem");
+        row.dataset.depth = depth;
+        const name = el("span", "name");
+        name.style.setProperty("--depth", depth);
+        if (kind !== "group") {
+          tasks++;
+          row.dataset.situation = item.situation;
+          name.append(dot(item.situation));
+        }
+        const label = el("span", "label", title);
+        label.title = title;
+        name.append(label);
+        row.append(name);
+        const unit = el("span", "unit", kind === "group" ? "" : (perspectives[item.perspective] || ""));
+        row.append(unit);
+        tree.append(row);
+        if (Array.isArray(item.children)) walk(item.children, depth + 1);
+      }
+    };
+    walk(Array.isArray(document_.queue) ? document_.queue : [], 0);
+    if (tasks === 0 && tree.childElementCount === 0) tree.append(el("div", "empty", "The queue is empty."));
+    byId("count").textContent = tasks === 1 ? "1 task" : tasks + " tasks";
+  }
+
+  function setStatus(text, isError) {
+    const status = byId("status");
+    status.textContent = text || "";
+    status.classList.toggle("error", Boolean(isError));
+    status.hidden = !text;
+  }
+  function showModified(header) {
+    const date = header ? new Date(header) : null;
+    byId("modified").textContent = date && !isNaN(date) ? date.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" }) : "";
+  }
+
+  // Načtení fronty. ETag poslední úspěšné odpovědi jde při dalším dotazu
+  // v If-None-Match; 304 znamená beze změny a lísteček se nepřekresluje.
+  // async/await: funkce vrací Promise a await pozastaví jen ji, ne stránku.
+  let etag = null, loaded = false;
+  async function load(token) {
+    const headers = { [tokenHeader]: token };
+    if (etag) headers["If-None-Match"] = etag;
+    let response;
+    try {
+      response = await fetch(api, { headers, cache: "no-store" });
+    } catch {
+      setStatus(loaded ? "Offline: showing the last loaded queue." : "The server is not reachable.", true);
+      return;
+    }
+    if (response.status === 304) { setStatus(""); return; }
+    if (response.status === 404) { setStatus("No queue exists for this link.", true); return; }
+    if (!response.ok) { setStatus("The server could not load the queue (HTTP " + response.status + ").", true); return; }
+    let document_;
+    try { document_ = await response.json(); } catch { setStatus("The stored queue is not valid JSON.", true); return; }
+    if (!document_ || typeof document_ !== "object" || document_.schemaVersion !== 1) {
+      setStatus("Unsupported queue format (schemaVersion " + (document_ && document_.schemaVersion) + "); update this page.", true);
+      return;
+    }
+    render(document_);
+    showModified(response.headers.get("Last-Modified"));
+    etag = response.headers.get("ETag");
+    loaded = true;
+    setStatus("");
+  }
+
+  // Založení prázdné fronty (převzato ze stránky bloku 1): server tvar
+  // dokumentu nezná, dodává ho klient ve schématu 1.
+  function setupCreate() {
+    byId("create").hidden = false;
+    const button = byId("create-button");
+    const result = byId("create-result");
+    button.addEventListener("click", async () => {
+      button.disabled = true;
+      result.replaceChildren();
+      try {
+        const response = await fetch(api, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ schemaVersion: 1, queue: [], archive: [] })
+        });
+        if (!response.ok) { result.textContent = "The queue could not be created (HTTP " + response.status + ")."; }
+        else {
+          const created = await response.json();
+          const url = location.origin + created.url;
+          const link = el("a", null, url);
+          link.href = url;
+          result.append(el("p", null, "Queue created. Save this link, it exists nowhere else:"), link);
+        }
+      } catch {
+        result.textContent = "The server is not reachable.";
+      } finally {
+        result.hidden = false;
+        button.disabled = false;
+      }
+    });
+  }
+
+  // Parametr ?theme=light|dark slouží jen testu (headless Edge přebírá
+  // předvolbu OS); uživatel ho nepotřebuje, stránka sleduje systém.
+  const theme = new URLSearchParams(location.search).get("theme");
+  if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
+
+  const token = location.hash.length > 1 ? location.hash.substring(1) : "";
+  if (!token) { setupCreate(); return; }
+  byId("note").hidden = false;
+  byId("version").textContent = pageVersion;
+  load(token);
+  // Návrat na kartu (přepnutí aplikací na telefonu) obnoví frontu; díky
+  // If-None-Match stojí nezměněná fronta jen hlavičky, ne celý dokument.
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") load(token); });
+  window.addEventListener("hashchange", () => location.reload());
+})();
+</script>
+</body>
+</html>

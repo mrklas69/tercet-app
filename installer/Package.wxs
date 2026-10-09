@@ -1,0 +1,31 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <!-- Instalace patří aktuálnímu uživateli; fronta není součástí MSI. -->
+  <Package Name="Tercet Preview" Manufacturer="Tercet" Version="$(var.PackageVersion)"
+           UpgradeCode="E4D29C20-E9A7-43F7-9D59-438CF29AA2B8" Scope="perUser" Language="1033">
+    <MajorUpgrade DowngradeErrorMessage="A newer version of Tercet is already installed." Schedule="afterInstallInitialize" />
+    <MediaTemplate EmbedCab="yes" CompressionLevel="high" />
+    <Launch Condition="Installed OR VersionNT64" Message="Tercet requires 64-bit Windows." />
+    <!-- Instalátor nesmí ukončit editor s neuloženými změnami ani restartovat PC. -->
+    <Property Id="REBOOT" Value="ReallySuppress" />
+    <Property Id="MSIRESTARTMANAGERCONTROL" Value="Disable" />
+    <Property Id="ARPNOMODIFY" Value="1" />
+    <Property Id="ARPCOMMENTS" Value="Private preview. Close Tercet before updating. Your queue is kept when uninstalling." />
+    <StandardDirectory Id="LocalAppDataFolder">
+      <Directory Id="UserProgramsFolder" Name="Programs"><Directory Id="INSTALLFOLDER" Name="Tercet" /></Directory>
+    </StandardDirectory>
+    <StandardDirectory Id="ProgramMenuFolder"><Directory Id="TercetMenuFolder" Name="Tercet" /></StandardDirectory>
+    <StandardDirectory Id="StartupFolder" />
+    <DirectoryRef Id="INSTALLFOLDER">
+      <Component Id="TercetShortcuts" Guid="*">
+        <RegistryValue Root="HKCU" Key="Software\Tercet\Installer" Name="Shortcuts" Type="integer" Value="1" KeyPath="yes" />
+        <Shortcut Id="StartMenuShortcut" Directory="TercetMenuFolder" Name="Tercet Preview" Target="[INSTALLFOLDER]Tercet.exe" WorkingDirectory="INSTALLFOLDER" />
+        <Shortcut Id="StartupShortcut" Directory="StartupFolder" Name="Tercet Preview" Target="[INSTALLFOLDER]Tercet.exe" WorkingDirectory="INSTALLFOLDER" />
+        <RemoveFolder Id="RemoveTercetMenu" Directory="TercetMenuFolder" On="uninstall" />
+        <RemoveFolder Id="RemoveUserPrograms" Directory="UserProgramsFolder" On="uninstall" />
+      </Component>
+    </DirectoryRef>
+    <Feature Id="TercetFeature" Title="Tercet" Level="1">
+      <ComponentGroupRef Id="AppPayload" /><ComponentRef Id="TercetShortcuts" />
+    </Feature>
+  </Package>
+</Wix>

@@ -1,0 +1,215 @@
+{
+  "schemaVersion": 1,
+  "queue": [
+    {
+      "id": "c9f185a0-2a70-4c55-8b1e-000000000005",
+      "kind": "group",
+      "title": "Workshop",
+      "children": [
+        {
+          "id": "c9f185a0-2a70-4c55-8b1e-000000000003",
+          "kind": "group",
+          "title": "Backlog",
+          "children": [
+            {
+              "id": "c9f185a0-2a70-4c55-8b1e-000000000001",
+              "kind": "task",
+              "title": "TASK-101",
+              "situation": "needsAttention",
+              "priority": "high",
+              "perspective": "hours",
+              "assignee": "Alex (example)"
+            },
+            {
+              "id": "c9f185a0-2a70-4c55-8b1e-000000000002",
+              "kind": "task",
+              "title": "TASK-102",
+              "situation": "inProgress",
+              "priority": "normal",
+              "perspective": "hours",
+              "assignee": "Alex (example)"
+            }
+          ]
+        },
+        {
+          "id": "c9f185a0-2a70-4c55-8b1e-000000000004",
+          "kind": "task",
+          "title": "Meeting notes",
+          "situation": "done",
+          "priority": "normal",
+          "perspective": "hours",
+          "assignee": "Alex (example)"
+        }
+      ]
+    },
+    {
+      "id": "c9f185a0-2a70-4c55-8b1e-000000000008",
+      "kind": "group",
+      "title": "Tercet",
+      "children": [
+        {
+          "id": "c9f185a0-2a70-4c55-8b1e-000000000006",
+          "kind": "task",
+          "title": "Create a website",
+          "situation": "inactive",
+          "priority": "low",
+          "perspective": "days",
+          "assignee": null
+        },
+        {
+          "id": "c9f185a0-2a70-4c55-8b1e-000000000007",
+          "kind": "task",
+          "title": "Review a release",
+          "situation": "underReview",
+          "priority": "normal",
+          "perspective": "days",
+          "assignee": "Alex (example)"
+        }
+      ]
+    },
+    {
+      "id": "c9f185a0-2a70-4c55-8b1e-000000000010",
+      "kind": "group",
+      "title": "Community café",
+      "children": [
+        {
+          "id": "c9f185a0-2a70-4c55-8b1e-000000000009",
+          "kind": "task",
+          "title": "Send invitations",
+          "situation": "inactive",
+          "priority": "high",
+          "perspective": "hours",
+          "assignee": null
+        }
+      ]
+    },
+    {
+      "id": "c9f185a0-2a70-4c55-8b1e-000000000014",
+      "kind": "group",
+      "title": "Astronomy",
+      "children": [
+        {
+          "id": "c9f185a0-2a70-4c55-8b1e-000000000011",
+          "kind": "task",
+          "title": "Plan observations",
+          "situation": "inactive",
+          "priority": "normal",
+          "perspective": "hours",
+          "assignee": null
+        },
+        {
+          "id": "c9f185a0-2a70-4c55-8b1e-000000000013",
+          "kind": "group",
+          "title": "Telescope tools",
+          "children": [
+            {
+              "id": "c9f185a0-2a70-4c55-8b1e-000000000012",
+              "kind": "task",
+              "title": "Adjust alignment",
+              "situation": "inProgress",
+              "priority": "normal",
+              "perspective": "hours",
+              "assignee": "Alex (example)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c9f185a0-2a70-4c55-8b1e-000000000018",
+      "kind": "group",
+      "title": "Garden",
+      "children": [
+        {
+          "id": "c9f185a0-2a70-4c55-8b1e-000000000017",
+          "kind": "compositeTask",
+          "title": "Repair the fence",
+          "situation": "inProgress",
+          "priority": "normal",
+          "perspective": "days",
+          "assignee": "Alex (example)",
+          "children": [
+            {
+              "id": "c9f185a0-2a70-4c55-8b1e-000000000015",
+              "kind": "task",
+              "title": "Replace posts",
+              "situation": "done",
+              "priority": "normal",
+              "perspective": "hours",
+              "assignee": "Alex (example)"
+            },
+            {
+              "id": "c9f185a0-2a70-4c55-8b1e-000000000016",
+              "kind": "task",
+              "title": "Paint the fence",
+              "situation": "inactive",
+              "priority": "normal",
+              "perspective": "hours",
+              "assignee": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c9f185a0-2a70-4c55-8b1e-000000000022",
+      "kind": "task",
+      "title": "Book a class",
+      "situation": "inactive",
+      "priority": "normal",
+      "perspective": "minutes",
+      "assignee": null
+    },
+    {
+      "id": "c9f185a0-2a70-4c55-8b1e-000000000023",
+      "kind": "group",
+      "title": "Ideas to sort",
+      "children": []
+    },
+    {
+      "id": "c9f185a0-2a70-4c55-8b1e-000000000024",
+      "kind": "compositeTask",
+      "title": "Prepare the workshop",
+      "situation": "inactive",
+      "priority": "normal",
+      "perspective": "days",
+      "assignee": null,
+      "children": []
+    }
+  ],
+  "archive": [
+    {
+      "originalParentId": "c9f185a0-2a70-4c55-8b1e-000000000018",
+      "originalIndex": 1,
+      "item": {
+        "id": "c9f185a0-2a70-4c55-8b1e-000000000021",
+        "kind": "compositeTask",
+        "title": "Repair the gate",
+        "situation": "done",
+        "priority": "normal",
+        "perspective": "days",
+        "assignee": "Alex (example)",
+        "children": [
+          {
+            "id": "c9f185a0-2a70-4c55-8b1e-000000000019",
+            "kind": "task",
+            "title": "Replace hinges",
+            "situation": "done",
+            "priority": "normal",
+            "perspective": "hours",
+            "assignee": "Alex (example)"
+          },
+          {
+            "id": "c9f185a0-2a70-4c55-8b1e-000000000020",
+            "kind": "task",
+            "title": "Adjust the latch",
+            "situation": "done",
+            "priority": "normal",
+            "perspective": "minutes",
+            "assignee": "Alex (example)"
+          }
+        ]
+      }
+    }
+  ]
+}

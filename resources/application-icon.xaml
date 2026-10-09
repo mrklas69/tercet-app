@@ -1,0 +1,28 @@
+<DrawingImage xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    <!-- Jediná vektorová předloha ikony A, souřadnice 64 × 64.
+         Tři úrovně mají společný pravý okraj. Pevné barvy značky odpovídají
+         Inactive a Needs attention z QueueAttention v návrhu značky;
+         nejsou živým stavem fronty a nemění se automaticky s její paletou. -->
+    <DrawingImage.Drawing>
+        <DrawingGroup>
+            <GeometryDrawing Brush="#292D2F">
+                <GeometryDrawing.Geometry>
+                    <RectangleGeometry Rect="0,0,64,64" RadiusX="12" RadiusY="12" />
+                </GeometryDrawing.Geometry>
+            </GeometryDrawing>
+            <GeometryDrawing Brush="#9A9D96">
+                <GeometryDrawing.Geometry>
+                    <GeometryGroup>
+                        <RectangleGeometry Rect="8,14,48,9" RadiusX="2" RadiusY="2" />
+                        <RectangleGeometry Rect="16,28,40,9" RadiusX="2" RadiusY="2" />
+                    </GeometryGroup>
+                </GeometryDrawing.Geometry>
+            </GeometryDrawing>
+            <GeometryDrawing Brush="#B64740">
+                <GeometryDrawing.Geometry>
+                    <RectangleGeometry Rect="24,42,32,9" RadiusX="2" RadiusY="2" />
+                </GeometryDrawing.Geometry>
+            </GeometryDrawing>
+        </DrawingGroup>
+    </DrawingImage.Drawing>
+</DrawingImage>

@@ -1,0 +1,22 @@
+# Jednotné formátování napříč editory; `dotnet format` ho čte taky.
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+
+# Markdown používá dvě mezery na konci řádku jako zalomení.
+[*.md]
+trim_trailing_whitespace = false
+
+# Projektové a konfigurační XML/JSON se konvenčně odsazují dvěma mezerami.
+[*.{json,slnx,csproj,props,targets}]
+indent_size = 2
+
+# Windows PowerShell 5.1 jinak čte české znaky jako ANSI; pwsh 7 BOM nevadí.
+[*.ps1]
+charset = utf-8-bom

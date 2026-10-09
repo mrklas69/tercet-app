@@ -1,0 +1,14 @@
+<Application x:Class="Tercet.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Tercet"
+             ShutdownMode="OnExplicitShutdown" ThemeMode="System">
+    <!-- ThemeMode načte i barevné resources podle Windows. Samotný odkaz na
+         Fluent.xaml zde při startu nechával barvy nenalezené (černý lísteček).
+         Režim System sleduje také pozdější změny systémového motivu. -->
+    <Application.Resources>
+        <!-- Absolutní pack URI funguje také v izolovaných testech hostovaných
+             PowerShellem: ikona patří assembly Tercetu, nikoli hostiteli. -->
+        <ImageSource x:Key="ApplicationIcon">pack://application:,,,/Tercet;component/Assets/Tercet.ico</ImageSource>
+    </Application.Resources>
+</Application>

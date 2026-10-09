@@ -1,0 +1,21 @@
+# Výstupy buildu .NET
+bin/
+obj/
+*.user
+publish/
+TestResults/
+
+# Editory a IDE
+.vs/
+.idea/
+
+# Junction na SDK v profilu — na každém stroji jiná, zakládá se ručně
+.dotnet/
+
+# Nástroje (WiX), publish payloady a výstupy MSIX mimo obj/, který se jako
+# výstup buildu maže; zakládá se recepty v installer/README
+.build/
+
+# Lokální nastavení agentů (oprávnění konkrétního stroje)
+.claude/settings.local.json
+.codex/config.toml
