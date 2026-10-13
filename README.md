@@ -16,9 +16,10 @@ Some lights blink in the app.*
 For **Windows 11 on Intel/AMD x64**. The installer includes the .NET Desktop
 Runtime; you do not need Git, PowerShell, an SDK or an account.
 
-1. Download and open the MSI. If Edge blocks the download, follow
-   [the steps below](#if-microsoft-edge-blocks-the-download). If Tercet is already running, choose **Exit**
-   in its system tray menu before installing the update.
+1. Download and open the MSI. If the browser blocks the download, follow the
+   steps for [Edge](#if-microsoft-edge-blocks-the-download) or
+   [Chrome](#if-google-chrome-blocks-the-download) below. If Tercet is already
+   running, choose **Exit** in its system tray menu before installing the update.
 2. Open **Tercet Preview** from the Windows Start menu.
 3. Press **Ctrl+Alt+T** to edit the example tasks, then choose **Save**.
 
@@ -41,17 +42,37 @@ MSI from the GitHub download link above:
 3. In the warning, choose **Show more**, then **Keep anyway**.
 4. Wait for the download to finish, then open **Tercet-2.0.4-win-x64.msi**.
 
-A file ending in **`.crdownload`** is a temporary download, not a ready installer.
-Do not rename it or change the installer extension to `.exe`; finish the download
-through Edge instead. MSI files must keep their **`.msi`** extension.
-
-These steps confirm this individual download; they do not turn off Windows
-protection. If **Keep anyway** is unavailable, or the warning reports malware,
-stop and share the exact message with the maintainer; on a managed PC, contact
-your IT administrator. A separate Windows security check may still block the
-installer after downloading.
 [Microsoft's download troubleshooting guide](https://learn.microsoft.com/en-us/troubleshoot/microsoft-edge/development/download-failures)
 describes the Edge controls.
+
+### If Google Chrome blocks the download
+
+Chrome may flag an unfamiliar installer as suspicious. For the Tercet MSI from
+the GitHub download link above:
+
+1. Press **Ctrl+J** in Chrome to open **Download history**.
+2. Find the Tercet download and open its **⋮** options menu.
+3. For an unfamiliar-file warning, choose **Download suspicious file**; if the
+   warning says **Unverified download blocked**, choose **Download unverified file**.
+   Review and confirm the file-specific prompt if Chrome displays one.
+4. Wait for the download to finish, then open **Tercet-2.0.4-win-x64.msi**.
+
+Labels can vary with the Chrome version and warning type.
+[Google's explanation of blocked downloads](https://support.google.com/chrome/answer/6261569?hl=en)
+describes the different warnings. Keep Safe Browsing enabled.
+
+### If the download still cannot be opened
+
+A file ending in **`.crdownload`** is a temporary download, not a ready installer.
+Do not rename it or change the installer extension to `.exe`; finish the download
+through your browser instead. MSI files must keep their **`.msi`** extension.
+
+These steps confirm this individual download; they do not turn off Windows
+protection. If the option to keep or download the file is unavailable, or the
+warning reports malware, stop and share the exact message with the maintainer;
+on a managed PC, contact
+your IT administrator. A separate Windows security check may still block the
+installer after downloading.
 
 ## Using Tercet
 
