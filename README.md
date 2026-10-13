@@ -16,7 +16,8 @@ Some lights blink in the app.*
 For **Windows 11 on Intel/AMD x64**. The installer includes the .NET Desktop
 Runtime; you do not need Git, PowerShell, an SDK or an account.
 
-1. Download and open the MSI. If Tercet is already running, choose **Exit**
+1. Download and open the MSI. If Edge blocks the download, follow
+   [the steps below](#if-microsoft-edge-blocks-the-download). If Tercet is already running, choose **Exit**
    in its system tray menu before installing the update.
 2. Open **Tercet Preview** from the Windows Start menu.
 3. Press **Ctrl+Alt+T** to edit the example tasks, then choose **Save**.
@@ -29,6 +30,28 @@ and [full installation instructions](installer/README.txt) are available.
 This preview is unsigned. Windows Smart App Control or SmartScreen may block it;
 disabling Windows protection is not part of setup. A Microsoft Store version is
 planned but is not available yet.
+
+### If Microsoft Edge blocks the download
+
+Edge may warn that this installer "isn't commonly downloaded". For the Tercet
+MSI from the GitHub download link above:
+
+1. Press **Ctrl+J** in Edge to open **Downloads**.
+2. Find the Tercet download and open its **…** menu, then choose **Keep**.
+3. In the warning, choose **Show more**, then **Keep anyway**.
+4. Wait for the download to finish, then open **Tercet-2.0.4-win-x64.msi**.
+
+A file ending in **`.crdownload`** is a temporary download, not a ready installer.
+Do not rename it or change the installer extension to `.exe`; finish the download
+through Edge instead. MSI files must keep their **`.msi`** extension.
+
+These steps confirm this individual download; they do not turn off Windows
+protection. If **Keep anyway** is unavailable, or the warning reports malware,
+stop and share the exact message with the maintainer; on a managed PC, contact
+your IT administrator. A separate Windows security check may still block the
+installer after downloading.
+[Microsoft's download troubleshooting guide](https://learn.microsoft.com/en-us/troubleshoot/microsoft-edge/development/download-failures)
+describes the Edge controls.
 
 ## Using Tercet
 
