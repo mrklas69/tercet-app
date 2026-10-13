@@ -61,6 +61,22 @@ Labels can vary with the Chrome version and warning type.
 [Google's explanation of blocked downloads](https://support.google.com/chrome/answer/6261569?hl=en)
 describes the different warnings. Keep Safe Browsing enabled.
 
+### If Windows shows "Windows protected your PC"
+
+After opening the downloaded MSI, **Windows SmartScreen** may show this warning
+with only a **Don't run** button. This check can appear after downloading with
+either Chrome or Edge.
+
+1. Click the **More info** text link in the warning.
+2. Check that the app is **Tercet-2.0.4-win-x64.msi** from the download link above,
+   then choose **Run anyway** to start the installer.
+
+**Don't run** cancels opening the installer; it is not the first step.
+If **Run anyway** does not appear after **More info**, stop and share the exact
+message with the maintainer; on a managed PC, contact your IT administrator.
+[Microsoft's SmartScreen documentation](https://learn.microsoft.com/en-us/windows/apps/package-and-deploy/smartscreen-reputation)
+explains why an unsigned app can trigger this warning.
+
 ### If the download still cannot be opened
 
 A file ending in **`.crdownload`** is a temporary download, not a ready installer.
@@ -70,9 +86,8 @@ through your browser instead. MSI files must keep their **`.msi`** extension.
 These steps confirm this individual download; they do not turn off Windows
 protection. If the option to keep or download the file is unavailable, or the
 warning reports malware, stop and share the exact message with the maintainer;
-on a managed PC, contact
-your IT administrator. A separate Windows security check may still block the
-installer after downloading.
+on a managed PC, contact your IT administrator. For a **Windows protected your PC**
+warning after downloading, follow the [SmartScreen steps above](#if-windows-shows-windows-protected-your-pc).
 
 ## Using Tercet
 
